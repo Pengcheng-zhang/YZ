@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>有赞币答</title>
+</head>
+<body>
+    <div>
+        <a th:if="${user} == null" href="/login">登陆</a>
+        <a th:if="${user} != null" th:text="${user.username}" href="/ucenter"></a>
+        <a href="/register">注册</a>
+    </div>
+    <div>
+        <div>图文</div>
+        <div>段子手</div>
+        <div>吐槽大会</div>
+    </div>
+</body>
+</html>

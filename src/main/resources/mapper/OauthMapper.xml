@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.yz.dao.OauthDao">
+    <resultMap id="authMap" type="org.yz.domain.Oauth">
+        <result column="id" property="id" />
+        <result column="user_id" property="user_id" />
+        <result column="access_token" property="access_token" />
+        <result column="created_at" property="created_at" />
+        <result column="updated_at" property="updated_at" />
+    </resultMap>
+
+    <parameterMap id="Oauth" type="org.yz.domain.Oauth"/>
+
+    <select id="getAccessTokenByNameAndPassword" resultMap="authMap" parameterType="java.lang.String">
+        select
+        yz_oauth.access_token
+        from yz_oauth
+        JOIN yz_user ON yz_user.username = #{arg0} and yz_user.password = #{arg1}
+        where yz_oauth.user_id  = yz_user.id
+    </select>
+
+    <insert id="saveAccessToken">
+        INSERT INTO yz_oauth (`user_id`, `access_token`) VALUES (#{arg0}, #{arg1})
+    </insert>
+
+</mapper>

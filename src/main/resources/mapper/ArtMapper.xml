@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.yz.dao.art.ArtDao">
+    <resultMap id="artListOutMap" type="org.yz.domain.ArtListOut">
+        <result column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="username" property="author"/>
+        <result column="title" property="title" />
+        <result column="content" property="content" />
+        <result column="img_url" property="imgUrl" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="comm_count" property="commCount" />
+        <result column="prise_count" property="priseCount" />
+        <result column="punish_count" property="punishCount" />
+    </resultMap>
+
+    <sql id="artColumns">
+        a.id, a.user_id, u.username, a.title, a.content, a.img_url, a.created_at, a.updated_at, a.prise_count, a.punish_count, a.comm_count
+    </sql>
+
+    <select id="getArtById" resultMap="artListOutMap" parameterType="java.lang.Long">
+        select
+        <include refid="artColumns">
+        </include>
+        from yz_art a
+        JOIN yz_user u ON a.user_id = u.id
+        WHERE a.id = #{arg0} and a.deleted_at IS NULL
+    </select>
+
+    <select id="getList" resultMap="artListOutMap" parameterType="java.lang.Integer">
+        select
+        <include refid="artColumns">
+        </include>
+        from yz_art a
+        JOIN yz_user u ON a.user_id = u.id
+        WHERE a.deleted_at IS NULL
+        ORDER BY a.id DESC
+    </select>
+
+    <insert id="create" parameterType="org.yz.domain.art.Art">
+        INSERT INTO yz_art(user_id, title, content, img_url) VALUES (#{user_id}, #{title}, #{content}, #{content}, #{img_url});
+    </insert>
+
+    <update id="deleteById" parameterType="java.lang.Long">
+        UPDATE yz_art SET deleted_at = NULL WHERE id = #{arg0}
+    </update>
+
+    <update id="update" parameterType="org.yz.domain.art.Art">
+        UPDATE yz_art SET (title, content, img_url) = (#{title}, #{content}, #{img_url});
+    </update>
+
+    <update id="prise" parameterType="java.lang.Long">
+        UPDATE yz_art SET prise_count = prise_count + 1 WHERE id = #{arg0}
+    </update>
+
+    <update id="comment" parameterType="java.lang.Long">
+    UPDATE yz_art SET comm_count = comm_count + 1 WHERE id = #{arg0};
+</update>
+
+    <update id="punish" parameterType="java.lang.Long">
+        UPDATE yz_art SET punish_count = punish_count + 1 WHERE id = #{arg0};
+    </update>
+
+    <update id="addViewCount" parameterType="java.lang.Long">
+        UPDATE yz_art SET view_count = view_count + 1 WHERE id = #{arg0};
+    </update>
+    <update id="cancelPrise" parameterType="java.lang.Long">
+    UPDATE yz_art SET prise_count = prise_count - 1 WHERE id = #{arg0};
+</update>
+
+    <update id="cancelPunish" parameterType="java.lang.Long">
+        UPDATE yz_art SET punish_count = punish_count - 1 WHERE id = #{arg0};
+    </update>
+
+    <update id="cancelPriseAndPunish" parameterType="java.lang.Long">
+        UPDATE yz_art SET prise_count = prise_count - 1,punish_count = punish_count + 1 WHERE id = #{arg0};
+    </update>
+
+    <update id="cancelPunishAndPrise" parameterType="java.lang.Long">
+        UPDATE yz_art SET punish_count = punish_count - 1, prise_count = prise_count + 1 WHERE id = #{arg0};
+    </update>
+
+    <select id="getPriseAndPunishTotal" parameterType="java.lang.Long" resultType="java.util.Map">
+        select sum(`prise_count`) as prise_total, sum(`punish_count`) as punish_total
+        from yz_art
+        where user_id = #{arg0} and deleted_at IS NULL
+    </select>
+</mapper>

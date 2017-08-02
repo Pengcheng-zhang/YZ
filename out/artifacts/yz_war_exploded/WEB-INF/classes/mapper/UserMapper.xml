@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.yz.dao.UserDao">
+    <resultMap id="BaseResultMap" type="org.yz.domain.User">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="password" property="password" />
+    </resultMap>
+
+    <parameterMap id="User" type="org.yz.domain.User"/>
+
+    <sql id="select_user_by_id">
+        id, name, password
+    </sql>
+
+    <select id="selectUserById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="select_user_by_id" />
+        from user
+        where id = #{id}
+    </select>
+
+    <select id="selectUserByUsername" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="select_user_by_id" />
+        from user
+        where name = #{username}
+    </select>
+
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO USER(`id` ,`name`, `password`) VALUES (#{id}, #{username}, #{password})
+    </insert>
+
+    <update id="updateUserOnPasswordById">
+        UPDATE user SET name=#{name} WHERE  id= #{id}
+    </update>
+
+    <delete id="deleteUserById">
+       DELETE FROM user WHERE  id = #{id}
+    </delete>
+
+    <select id="selectAllUsers" resultMap="BaseResultMap">
+        SELECT * FROM user
+    </select>
+</mapper>
