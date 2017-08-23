@@ -13,6 +13,8 @@ public class ArtComments {
     private Long pId; //上级评论id
     private Integer priseNum; //点赞数
     private Integer punishNum; //鄙视数
+    private String createdAt; //评论时间
+
 
     public Long getId() {
         return id;
@@ -68,5 +70,13 @@ public class ArtComments {
 
     public void setPunishNum(Integer punishNum) {
         this.punishNum = punishNum;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 }

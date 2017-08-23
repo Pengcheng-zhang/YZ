@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.yz.dao.art.ArtCommentsDao">
+    <resultMap id="artCommentsListMap" type="org.yz.domain.art.ArtComments">
+        <result column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="art_id" property="artId"/>
+        <result column="comments" property="comments" />
+        <result column="pid" property="pId" />
+        <result column="prise_num" property="priseNum" />
+        <result column="punish_num" property="punishNum" />
+        <result column="created_at" property="createdAt" />
+    </resultMap>
+
+    <sql id="artCommentsColumns">
+        a.id, a.user_id, u.art_id, a.comments, a.pid, a.prise_num, a.prise_num, a.created_at
+    </sql>
+
+    <select id="getListByArtId" resultMap="artCommentsListMap" parameterType="java.lang.Long">
+        select
+        <include refid="artCommentsColumns">
+        </include>
+        from yz_art_comments a
+        WHERE a.art_id = #{arg0} and a.deleted_at IS NULL
+        LIMIT #{arg1} OFFSET #{arg2}
+    </select>
+
+    <insert id="create" parameterType="org.yz.domain.art.ArtComments">
+        INSERT INTO yz_art_comments(user_id, art_id, comments, pid) VALUES (#{userId}, #{artId}, #{comments}, #{pId});
+    </insert>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM yz_art_comments WHERE id = #{arg0};
+    </delete>
+
+    <update id="prise" parameterType="java.lang.Long">
+        UPDATE yz_art_comments SET prise_num = prise_num + 1 WHERE id = #{arg0};
+    </update>
+
+    <update id="punish" parameterType="java.lang.Long">
+        UPDATE yz_art_comments SET punishNum = punishNum + 1 WHERE id = #{arg0};
+    </update>
+</mapper>

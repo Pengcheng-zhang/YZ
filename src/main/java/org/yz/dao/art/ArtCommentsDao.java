@@ -10,8 +10,13 @@ import java.util.List;
  */
 @Repository
 public interface ArtCommentsDao {
-    List<ArtComments> getByArtId(Long artId);
-    Long create(Long artId, ArtComments artComments);
+    List<ArtComments> getByArtId(Long artId, Integer page, Long offset);
+    ArtComments getById(Long id);
+    Long create(ArtComments artComments);
     Long delete(Long id);
     Long update(Long id);
+    Long prise(Long id);
+    Long punish(Long id);
+    Long cancelPrise(Long id);
+    Long cancelPunish(Long id);
 }

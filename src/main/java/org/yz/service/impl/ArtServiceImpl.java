@@ -64,7 +64,7 @@ public class ArtServiceImpl implements ArtService {
         }
         return true;
     }
-    private boolean check_exist(Long id) {
+    public boolean check_exist(Long id) {
         ArtListOut artListOut =artDao.getArtById(id);
         if (artListOut == null) {
             message.setCode("20008");
@@ -138,7 +138,7 @@ public class ArtServiceImpl implements ArtService {
                     message.setResult(num.toString());
                 }
             }else{
-                artHistory.setUserd(user_id);
+                artHistory.setUserId(user_id);
                 artHistory.setArtId(id);
                 artHistory.setType(0);
                 artHistoryDao.create(artHistory);
@@ -154,7 +154,7 @@ public class ArtServiceImpl implements ArtService {
      * @param id
      * @return
      */
-    public Message comment(Long user_id, Long id) {
+    public Message comments(Long user_id, Long id) {
         if (check_exist(id)) {
             Long num = artDao.comment(id);
             message.setResult(num.toString());
@@ -186,7 +186,7 @@ public class ArtServiceImpl implements ArtService {
                     message.setResult(num.toString());
                 }
             } else {
-                artHistory.setUserd(user_id);
+                artHistory.setUserId(user_id);
                 artHistory.setArtId(id);
                 artHistory.setType(1);
                 artHistoryDao.create(artHistory);

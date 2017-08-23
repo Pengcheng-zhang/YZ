@@ -683,6 +683,23 @@ pre {
         margin-bottom: 10px
     }
 }
+@media screen and (max-width: 600px) {
+    .main-content .post-meta{
+        padding: 5px;
+    }
+    .post {
+        padding: 10px;
+    }
+    .post-relative-info>span{
+        float: left;
+    }
+    .post-relative-info span{
+        padding: 6px;
+    }
+    .media-left{
+        display: block;
+    }
+}
 
 .windows .post-content {
     font-size: 16px;

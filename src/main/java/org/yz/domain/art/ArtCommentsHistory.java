@@ -1,12 +1,12 @@
 package org.yz.domain.art;
 
 /**
- * Created by 张鹏程 on 2017/6/26.
+ * Created by 张鹏程 on 2017/8/7.
  */
-public class ArtHistory {
+public class ArtCommentsHistory {
     private Long id;
-    private Long artId;
     private Long userId;
+    private Long commentId;
     private Integer type;
     private String updatedAt;
     private String createdAt;
@@ -19,20 +19,20 @@ public class ArtHistory {
         this.id = id;
     }
 
-    public Long getArtId() {
-        return artId;
-    }
-
-    public void setArtId(Long artId) {
-        this.artId = artId;
-    }
-
     public Long getUserId() {
         return userId;
     }
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(Long commentId) {
+        this.commentId = commentId;
     }
 
     public Integer getType() {

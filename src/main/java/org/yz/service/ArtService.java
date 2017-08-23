@@ -14,12 +14,13 @@ import java.util.Map;
  */
 public interface ArtService {
     List<ArtListOut> getArtList(Integer page, Integer limit);
+    boolean check_exist(Long id);
     ArtListOut detail(Long id);
     Message create(Art art);
     Message update(Art art);
     Message deleteById(Long id);
     Message prise(Long user_id, Long id);
-    Message comment(Long user_id, Long id);
+    Message comments(Long user_id, Long id);
     Message punish(Long user_id, Long id);
     Map<String, BigDecimal> getPriseAndPunishTotal(Long user_id);
 }
